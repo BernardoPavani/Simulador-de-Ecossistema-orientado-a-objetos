@@ -236,27 +236,17 @@ public class Simulator
         for(int row = 0; row < field.getDepth(); row++) {
             for(int col = 0; col < field.getWidth(); col++) {
 
-                // Pega o terreno da localização atual
-                Terreno terreno = field.getTerrenoAt(row, col);
                 
                 // --- LÓGICA DOS ANIMAIS ---
                 if(rand.nextDouble() <= FOX_CREATION_PROBABILITY) {
                     Fox fox = new Fox(true);
-                    //So coloca a raposa se o terreno for habitavel por ela
-                    if (terreno.ehHabitavel(fox)) {
-                        atores.add(fox);
-                        fox.setLocation(row, col);
-                        field.place(fox, row, col);
-                    }
+                    // Só coloca a raposa se o terreno for habitável por ela
+                    placeIfHabitable(field, fox, row, col);
                 }
                 else if(rand.nextDouble() <= RABBIT_CREATION_PROBABILITY) {
                     Rabbit rabbit = new Rabbit(true);
-                    //So coloca o coelho se o terreno for habitavel por ele
-                    if (terreno.ehHabitavel(rabbit)) {
-                        atores.add(rabbit);
-                        rabbit.setLocation(row, col);
-                        field.place(rabbit, row, col);
-                    }
+                    // Só coloca o coelho se o terreno for habitável por ele
+                    placeIfHabitable(field, rabbit, row, col);
                 }
                                 
                 // Se o local ainda estiver vazio (nenhum animal foi criado nele)...
@@ -265,21 +255,13 @@ public class Simulator
                     // Tentamos plantar uma Flor.
                     if (rand.nextDouble() <= FLOR_CREATION_PROBABILITY) {
                         Flor flor = new Flor();
-                        if (terreno.ehHabitavel(flor)){
-                            atores.add(flor);
-                            flor.setLocation(row, col);
-                            field.place(flor, row, col);
-                        }
+                        placeIfHabitable(field, flor, row, col);
                     }
                     
                     // Tentamos plantar uma VitoriaRegia.
                     if (rand.nextDouble() <= VITORIAREGIA_CREATION_PROBABILITY) {
                         VitoriaRegia vixRegia = new VitoriaRegia();
-                        if (terreno.ehHabitavel(vixRegia)){
-                            atores.add(vixRegia);
-                            vixRegia.setLocation(row, col);
-                            field.place(vixRegia, row, col);
-                        }
+                        placeIfHabitable(field, vixRegia, row, col);
                     }
                 }
                 // --- FIM DA LÓGICA DAS PLANTAS ---
@@ -297,6 +279,26 @@ public class Simulator
             for (int col = 0; col < width; col++) {
                 terrenos[row][col] = TERRENO_PADRAO;
             }
+        }
+    }
+
+    /**
+     * Tenta colocar um ator numa posição do campo se o terreno for habitável
+     * e a posição estiver vazia. Centraliza a lógica de adição para evitar
+     * duplicação em `populate()`.
+     *
+     * @param field O campo onde colocar o ator.
+     * @param ator O ator a ser colocado (Animal ou Vegetacao).
+     * @param row A coordenada da linha.
+     * @param col A coordenada da coluna.
+     */
+    private void placeIfHabitable(Field field, Ator ator, int row, int col)
+    {
+        Terreno terreno = field.getTerrenoAt(row, col);
+        if (terreno.ehHabitavel(ator) && field.getObjectAt(row, col) == null) {
+            atores.add(ator);
+            ator.setLocation(new Location(row, col));
+            field.place(ator, row, col);
         }
     }
 
