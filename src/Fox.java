@@ -27,7 +27,7 @@ public class Fox extends Animal
     
     /** Valor nutritivo de um coelho em passos de vida.
      * Representa quantos passos a raposa pode sobreviver após comer um coelho. */
-    private static final int RABBIT_FOOD_VALUE = 12;
+    private static final int RABBIT_FOOD_VALUE = 10;
     
     /** Cor de representação visual da raposa na simulação. */
     private static final Color COR = Color.BLUE;
