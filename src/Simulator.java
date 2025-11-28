@@ -109,8 +109,8 @@ public class Simulator
     public Simulator(int depth, int width)
     {
         if(width <= 0 || depth <= 0) {
-            System.out.println("The dimensions must be greater than zero.");
-            System.out.println("Using default values.");
+            System.out.println("As dimensoes devem ser maiores do que zero.");
+            System.out.println("Usando valores padronizados.");
             depth = DEFAULT_DEPTH;
             width = DEFAULT_WIDTH;
         }

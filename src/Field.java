@@ -151,7 +151,7 @@ public class Field
      */
     public Location freeAdjacentLocation(Location location)
     {
-        Iterator adjacent = adjacentLocations(location);
+        Iterator<Location> adjacent = adjacentLocations(location);
         while(adjacent.hasNext()) {
             Location next = (Location) adjacent.next();
             if(field[next.getRow()][next.getCol()] == null) {
@@ -176,7 +176,7 @@ public class Field
      */
     public Location freeHabitableAdjacentLocation(Location location, Ator ator)
     {
-        Iterator adjacent = adjacentLocations(location);
+        Iterator<Location> adjacent = adjacentLocations(location);
         while(adjacent.hasNext()) {
             Location next = (Location) adjacent.next();
             
@@ -209,11 +209,11 @@ public class Field
      * * @param location A localização da qual gerar adjacências.
      * @return Um iterador sobre localizações adjacentes válidas.
      */
-    public Iterator adjacentLocations(Location location)
+    public Iterator<Location> adjacentLocations(Location location)
     {
         int row = location.getRow();
         int col = location.getCol();
-        LinkedList locations = new LinkedList();
+        LinkedList<Location> locations = new LinkedList<Location>();
         for(int roffset = -1; roffset <= 1; roffset++) {
             int nextRow = row + roffset;
             if(nextRow >= 0 && nextRow < depth) {

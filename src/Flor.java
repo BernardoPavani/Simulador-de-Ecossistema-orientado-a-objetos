@@ -70,9 +70,9 @@ public class Flor extends Vegetacao
     protected void executarAcao(Field currentField, Field updatedField, List<Ator> newActors)
     {
         if (rand.nextDouble() <= SPREAD_PROBABILITY) {
-            Iterator adjacent = currentField.adjacentLocations(location);
+            Iterator<Location> adjacent = currentField.adjacentLocations(location);
             while (adjacent.hasNext()) {
-                Location next = (Location) adjacent.next();
+                Location next = adjacent.next();
                 
                 // Verifica se o local adjacente é Grama E está vazio
                 boolean ehGrama = (currentField.getTerrenoAt(next) instanceof Grama);

@@ -33,12 +33,12 @@ public class SimulatorView extends JFrame
      * @param height A altura (profundidade) da grade de simulação.
      * @param width A largura da grade de simulação.
      */
-    public SimulatorView(Simulator simulator, int height, int width)
+    public SimulatorView(Simulator sim, int height, int width)
     {
-        this.simulator = simulator;
+        this.simulator = sim;
         stats = new FieldStats();
 
-        setTitle("Zoofilia, ecossitema fudido");
+        setTitle("Simulacão Ecológica");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
         

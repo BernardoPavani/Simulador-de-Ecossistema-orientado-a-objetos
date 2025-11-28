@@ -1,7 +1,5 @@
 import java.awt.Color;
-import java.util.List;
 import java.util.Iterator; 
-import java.util.Random;
 
 /**
  * Modelo simples de um Coelho (presa) na simulação.
@@ -164,9 +162,9 @@ public class Rabbit extends Animal
      */
     private Location findFood(Field currentField, Field updatedField)
     {
-        Iterator adjacentLocations = currentField.adjacentLocations(location);
+        Iterator<Location> adjacentLocations = currentField.adjacentLocations(location);
         while(adjacentLocations.hasNext()) {
-            Location where = (Location) adjacentLocations.next();
+            Location where = adjacentLocations.next();
 
             // Verifica se o coelho pode ir para lá (habitável)
             if (updatedField.getTerrenoAt(where).ehHabitavel(this)) {

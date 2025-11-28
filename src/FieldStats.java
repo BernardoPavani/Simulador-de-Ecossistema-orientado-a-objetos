@@ -12,7 +12,8 @@ import java.util.Iterator;
 public class FieldStats
 {
     // Contadores para cada tipo de entidade (raposa, coelho, etc.) na simulação.
-    private HashMap counters;
+    // Neste caso, usamos CLasses como chave e Counter como valor.
+    private HashMap<Class<?>, Counter> counters;
     // Indica se os contadores estão atualmente atualizados com o estado do campo.
     private boolean countsValid;
 
@@ -23,7 +24,7 @@ public class FieldStats
     public FieldStats()
     {
         // Configura uma coleção para contadores de cada tipo de ator que possamos encontrar
-        counters = new HashMap();
+        counters = new HashMap<>();
         countsValid = true;
     }
 
@@ -39,9 +40,10 @@ public class FieldStats
         if(!countsValid) {
             generateCounts(field);
         }
-        Iterator keys = counters.keySet().iterator();
+        // Iterator tipado para Class<?>
+        Iterator<Class<?>> keys = counters.keySet().iterator();
         while(keys.hasNext()) {
-            Counter info = (Counter) counters.get(keys.next());
+            Counter info = counters.get(keys.next());
             buffer.append(info.getName());
             buffer.append(": ");
             buffer.append(info.getCount());
@@ -57,9 +59,9 @@ public class FieldStats
     public void reset()
     {
         countsValid = false;
-        Iterator keys = counters.keySet().iterator();
+        Iterator<Class<?>> keys = counters.keySet().iterator();
         while(keys.hasNext()) {
-            Counter cnt = (Counter) counters.get(keys.next());
+            Counter cnt = counters.get(keys.next());
             cnt.reset();
         }
     }
@@ -69,7 +71,7 @@ public class FieldStats
      * Se a classe ainda não tiver um contador registrado, um novo será criado.
      * * @param atorClass A classe do ator a ser contado (ex: Fox.class).
      */
-    public void incrementCount(Class atorClass)
+    public void incrementCount(Class<?> atorClass)
     {
         Counter cnt = (Counter) counters.get(atorClass);
         if(cnt == null) {
@@ -103,9 +105,9 @@ public class FieldStats
         if(!countsValid) {
             generateCounts(field);
         }
-        Iterator keys = counters.keySet().iterator();
+        Iterator<Class<?>> keys = counters.keySet().iterator();
         while(keys.hasNext()) {
-            Counter info = (Counter) counters.get(keys.next());
+            Counter info = counters.get(keys.next());
             if(info.getCount() > 0) {
                 nonZero++;
             }

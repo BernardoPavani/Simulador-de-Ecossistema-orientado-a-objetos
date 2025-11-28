@@ -27,7 +27,7 @@ public class Fox extends Animal
     
     /** Valor nutritivo de um coelho em passos de vida.
      * Representa quantos passos a raposa pode sobreviver após comer um coelho. */
-    private static final int RABBIT_FOOD_VALUE = 8;
+    private static final int RABBIT_FOOD_VALUE = 12;
     
     /** Cor de representação visual da raposa na simulação. */
     private static final Color COR = Color.BLUE;
@@ -167,13 +167,6 @@ public class Fox extends Animal
      * Procura por uma presa (coelho) em uma localização adjacente habitável.
      * Se encontrar um coelho vivo, a raposa o consome, aumentando seu nível de fome.
      * 
-     * <p>Este método verifica:</p>
-     * <ul>
-     *   <li>Se a localização adjacente é habitável para a raposa</li>
-     *   <li>Se há um coelho naquela localização</li>
-     *   <li>Se o coelho está vivo</li>
-     * </ul>
-     * 
      * @param currentField O campo atual da simulação (contém os animais).
      * @param updatedField O campo atualizado (contém informações de terreno).
      * @return A localização do coelho encontrado, ou {@code null} se nenhum coelho
@@ -181,9 +174,9 @@ public class Fox extends Animal
      */
     private Location findFood(Field currentField, Field updatedField)
     {
-        Iterator adjacentLocations = currentField.adjacentLocations(location);
+        Iterator<Location> adjacentLocations = currentField.adjacentLocations(location);
         while(adjacentLocations.hasNext()) {
-            Location where = (Location) adjacentLocations.next();
+            Location where = adjacentLocations.next();
 
             if (updatedField.getTerrenoAt(where).ehHabitavel(this)) {
                 Object animal = currentField.getObjectAt(where);
